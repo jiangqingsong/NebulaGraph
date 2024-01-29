@@ -3,6 +3,7 @@ package com.seres.datapreprocess.controller;
 import com.seres.datapreprocess.common.ResultUtil;
 import com.seres.datapreprocess.enums.ResultEnum;
 import com.seres.datapreprocess.service.DataPreprocessService;
+import com.seres.datapreprocess.vo.MongoDataTransVO;
 import com.seres.datapreprocess.vo.MysqlDataTransVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,17 @@ public class DataPreprocessController {
         boolean isOk = dataPreprocessService.mysql2csv(mysqlDataTransVO);
         if(isOk){
             return new ResponseEntity(ResultUtil.success("mysql转csv成功！"), HttpStatus.OK);
+        }else {
+            return new ResponseEntity(ResultUtil.error(ResultEnum._FAILED), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/mongo2csv")
+    @ResponseBody
+    public ResponseEntity<String> mongo2csv(@RequestBody MongoDataTransVO vo)  {
+        boolean isOk = dataPreprocessService.mongo2csv(vo);
+        if(isOk){
+            return new ResponseEntity(ResultUtil.success("mongo转csv成功！"), HttpStatus.OK);
         }else {
             return new ResponseEntity(ResultUtil.error(ResultEnum._FAILED), HttpStatus.INTERNAL_SERVER_ERROR);
         }

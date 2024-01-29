@@ -1,4 +1,4 @@
-package com.seres.datapreprocess.mysql;
+package com.seres.datapreprocess.trans.mysql;
 
 
 import com.seres.datapreprocess.service.DataPreprocessService;

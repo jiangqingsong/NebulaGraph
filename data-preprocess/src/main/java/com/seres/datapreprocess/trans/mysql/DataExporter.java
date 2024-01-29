@@ -1,4 +1,4 @@
-package com.seres.datapreprocess.mysql;
+package com.seres.datapreprocess.trans.mysql;
 
 import java.io.FileWriter;
 import java.io.IOException;
