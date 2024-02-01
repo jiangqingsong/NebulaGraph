@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+
+    <!-- 属性文件:在properties文件中找到对应的配置项 -->
+    <springProperty scope="context" name="LOG_FILE_NAME" source="logging.file.name" defaultValue="logs/app.log"/>
+
+    <!-- 1、彩色日志依赖的渲染类 -->
+    <!-- 1.1、支持的内置颜色函数：highlight blue cyan green magenta red yellow -->
+    <!-- 1.2、也可使用logback默认的自动颜色控制转化类 -->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <property name="CONSOLE_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%blue(%X{trace_id:--})] %clr(%-5p) %t %cyan(%C{1}.%M:%L): %m%n"/>
+    <property name="FILE_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{trace_id:--}] %-5p %t %C{1}.%M:%L: %m%n"/>
+
+    <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 日志输出到文件 -->
+    <appender name="fileLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${FILE_PATTERN}</pattern>
+        </encoder>
+        <file>${LOG_FILE_NAME}</file>
+        <!--滚动策略，只会针对当前文件名匹配模式下能匹配的文件进行归档或删除，一般不同应用或同一应用历史的文件名匹配模式产生的文件将不会纳入后续归档-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--文件存放路径，以.gz结束可实现压缩-->
+            <fileNamePattern>${LOG_FILE_NAME}.%d{yyyy-MM-dd}</fileNamePattern>
+            <!--启动时是否归档历史文件-->
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            <!-- 最早保留的文件的倒推时间个数（N天/小时...），如：按天归档，则会删除N天前的，按小时归档，则会删除N小时前的 -->
+            <maxHistory>185</maxHistory>
+            <!-- 本应用最大日志总容量，超过会删除最早的日志文件 -->
+            <totalSizeCap>100GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- 开发环境：输出到控制台-->
+    <springProfile name="dev">
+        <root level="info">
+            <appender-ref ref="consoleLog"/>
+            <appender-ref ref="fileLog"/>
+        </root>
+    </springProfile>
+
+    <!-- test环境：输出到文件-->
+    <springProfile name="test">
+        <root level="info">
+            <appender-ref ref="fileLog"/>
+        </root>
+    </springProfile>
+
+    <!-- 生产环境：输出到文件-->
+    <springProfile name="prod">
+        <root level="info">
+            <appender-ref ref="fileLog"/>
+        </root>
+    </springProfile>
+
+</configuration>

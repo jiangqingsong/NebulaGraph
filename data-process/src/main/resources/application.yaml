@@ -1,0 +1,17 @@
+server:
+  port: ${port:30014}
+
+spring:
+  application:
+    name: dataprocess
+
+  profiles:
+    include: base
+    active: dev
+#项目信息
+info:
+  #自定义显示信息
+  '[描述]': 数据处理服务
+
+
+
