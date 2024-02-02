@@ -1,4 +1,4 @@
-package com.seres.kgserver.domain;
+package com.seres.kgserver.dao;
 
 import com.seres.kgserver.pojo.Team;
 import org.nebula.contrib.ngbatis.proxy.NebulaDaoBasic;

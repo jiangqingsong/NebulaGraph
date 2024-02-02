@@ -1,6 +1,8 @@
 package com.seres.kgserver.pojo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.nebula.contrib.ngbatis.annotations.Space;
 
 import javax.persistence.Id;
@@ -17,6 +19,8 @@ import javax.persistence.Table;
 @Data
 @Table(name = "player")
 @Space(name = "demo_basketballplayer")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Player {
     @Id
     private String id;

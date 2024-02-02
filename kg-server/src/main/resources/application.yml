@@ -1,5 +1,16 @@
 server:
-  port: 8083
+  port: 30015
+spring:
+  application:
+    name: kg-server
+
+  profiles:
+    include: base
+    active: dev
+#项目信息
+info:
+  #自定义显示信息
+  '[描述]': 知识图谱查询服务
 
 nebula:
   ngbatis:
