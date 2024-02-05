@@ -12,7 +12,7 @@
 
     <modules>
         <module>base</module>
-        <module>data-preprocess</module>
+        <module>data-process</module>
         <module>kg-server</module>
     </modules>
 
@@ -80,7 +80,8 @@
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
-                <version>8.0.20</version>
+<!--                <version>8.0.20</version>-->
+                <version>5.1.30</version>
             </dependency>
             <!-- mybatis及数据库相关 end -->
             <!-- spring-boot-admin相关 start -->

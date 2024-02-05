@@ -3,10 +3,10 @@ package com.seres.datapreprocess.service;
 import com.seres.datapreprocess.trans.mongo.Mongo2csv;
 import com.seres.datapreprocess.trans.mysql.DataExporter;
 import com.seres.datapreprocess.trans.mysql.DatabaseConnector;
+import com.seres.datapreprocess.util.DBConnection;
 import com.seres.datapreprocess.vo.MongoDataTransVO;
 import com.seres.datapreprocess.vo.MysqlDataTransVO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -21,8 +21,33 @@ import java.sql.SQLException;
  * @date 2024/1/24 17:48
  */
 @Service
+@Slf4j
 public class DataPreprocessService {
-    private static Logger log = LoggerFactory.getLogger(DataPreprocessService.class);
+
+    /**
+     * @Description: mysql连接测试
+     * @param
+     * @return
+     * @version v1.0
+     * @author jiangqs
+     * @date 2024/2/5 14:47
+     */
+    public boolean mysqlConnectTest(MysqlDataTransVO mysql){
+        return DBConnection.testMySQLConnection(mysql);
+    }
+
+
+    /**
+     * @Description: mongodb连接测试
+     * @param
+     * @return
+     * @version v1.0
+     * @author jiangqs
+     * @date 2024/2/5 14:47
+     */
+    public boolean mongodbConnectTest(MongoDataTransVO mongo){
+        return DBConnection.testMongoDBConnection(mongo);
+    }
 
     /**
      * @param

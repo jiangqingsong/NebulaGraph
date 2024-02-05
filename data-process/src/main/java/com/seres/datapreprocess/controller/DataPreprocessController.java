@@ -26,6 +26,29 @@ public class DataPreprocessController {
     @Autowired
     private DataPreprocessService dataPreprocessService;
 
+
+    @PostMapping("/testMysqlConnect")
+    @ResponseBody
+    public Resp<String> testMysqlConnect(@RequestBody MysqlDataTransVO mysqlDataTransVO)  {
+        boolean isOk = dataPreprocessService.mysqlConnectTest(mysqlDataTransVO);
+        if(isOk){
+            return new Resp<>("mysql连接成功！");
+        }else {
+            return new ErrResp("mysql连接失败！");
+        }
+    }
+
+    @PostMapping("/testMongoConnect")
+    @ResponseBody
+    public Resp<String> testMongoConnect(@RequestBody MongoDataTransVO mysqlDataTransVO)  {
+        boolean isOk = dataPreprocessService.mongodbConnectTest(mysqlDataTransVO);
+        if(isOk){
+            return new Resp<>("mongodb连接成功！");
+        }else {
+            return new ErrResp("mongodb连接失败！");
+        }
+    }
+
     @PostMapping("/mysql2csv")
     @ResponseBody
     public Resp<String> mysql2csv(@RequestBody MysqlDataTransVO mysqlDataTransVO)  {
@@ -38,11 +61,6 @@ public class DataPreprocessController {
         }else {
             return new ErrResp("mysql转csv失败！");
         }
-    }
-
-    @GetMapping("/hello")
-    public Resp<String> hello(){
-        return new Resp<>("hello");
     }
 
 
