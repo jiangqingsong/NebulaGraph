@@ -14,6 +14,7 @@
         <module>base</module>
         <module>data-process</module>
         <module>kg-server</module>
+        <module>ng-common-server</module>
     </modules>
 
     <groupId>com.seres</groupId>

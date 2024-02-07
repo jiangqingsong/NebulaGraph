@@ -1,0 +1,21 @@
+server:
+  port: 30016
+spring:
+  application:
+    name: ng-server
+
+  profiles:
+    active: dev
+#项目信息
+info:
+  #自定义显示信息
+  '[描述]': 知识图谱查询服务-01
+
+nebula:
+  address[0]:
+    host: 10.36.253.10
+    port: 9669
+  username: root
+  password: nebula
+  reconnect: false
+  space: demo_basketballplayer

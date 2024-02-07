@@ -1,4 +1,4 @@
-package com.seres.kgserver.pojo;
+package com.seres.kgserver.pojo.demo_basketballplayer;
 
 import javax.persistence.Table;
 

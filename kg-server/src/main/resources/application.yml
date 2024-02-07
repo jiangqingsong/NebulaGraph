@@ -12,6 +12,18 @@ info:
   #自定义显示信息
   '[描述]': 知识图谱查询服务
 
+
+
+### nebula graph client ###
+myapp:
+  nebula:
+    hosts: 10.36.253.10:9669
+    username: root
+    password: nebula
+    max-conn: 10
+
+
+
 nebula:
   ngbatis:
     # ^v1.1.2

@@ -3,7 +3,7 @@ package com.seres.kgserver.service;
 import com.alibaba.fastjson.JSON;
 import com.seres.kgserver.config.CustomPkGenerator;
 import com.seres.kgserver.dao.PlayerDao;
-import com.seres.kgserver.pojo.Player;
+import com.seres.kgserver.pojo.demo_basketballplayer.Player;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

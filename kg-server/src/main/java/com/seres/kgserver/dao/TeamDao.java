@@ -1,6 +1,6 @@
 package com.seres.kgserver.dao;
 
-import com.seres.kgserver.pojo.Team;
+import com.seres.kgserver.pojo.demo_basketballplayer.Team;
 import org.nebula.contrib.ngbatis.proxy.NebulaDaoBasic;
 
 /**
