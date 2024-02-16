@@ -1,11 +1,9 @@
 package com.seres.kgserver.dao.isp;
 
 import com.seres.kgserver.nebula.tag.isp.Project;
-import com.seres.kgserver.pojo.demo_basketballplayer.Player;
 import org.nebula.contrib.ngbatis.proxy.NebulaDaoBasic;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @Description: 项目DAO
