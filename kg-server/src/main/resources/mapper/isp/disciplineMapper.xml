@@ -1,0 +1,15 @@
+<mapper namespace="com.seres.kgserver.dao.isp.DisciplineDao">
+
+    <insert id="insertAffiliatedDiscipline">
+        insert edge affiliated_discipline() values "${disciplineVid}"->"${projectVid}":()
+    </insert>
+
+    <insert id="insertAffiliatedPhase">
+        insert edge affiliated_phase() values "${disciplineVid}"->"${phaseVid}":()
+    </insert>
+
+    <select id="selectAllDiscipline" resultType="com.seres.kgserver.nebula.tag.isp.Discipline">
+        <!-- isp数据量小可以查询全部 -->
+        MATCH (a: discipline) RETURN a
+    </select>
+</mapper>

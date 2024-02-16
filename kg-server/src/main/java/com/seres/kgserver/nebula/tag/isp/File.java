@@ -1,4 +1,4 @@
-package com.seres.kgserver.pojo.demo_basketballplayer;
+package com.seres.kgserver.nebula.tag.isp;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,22 +8,21 @@ import org.nebula.contrib.ngbatis.annotations.Space;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 /**
- * Description:
+ * Description:文件
  *
  * @author jiangqs
  * @version 1.0
- * @date 2024/1/24 16:04
+ * @date 2024/2/15 11:10
  */
 @Data
-@Table(name = "player")
-@Space(name = "demo_basketballplayer")
+@Table(name = "project")
+@Space(name = "isp")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Player {
+public class File {
     @Id
     private String id;
-    private String name;
-    private Integer age;
+    private String fileName;
+    private String uploadTime;//yyyy-MM-dd hh:mm:ss
 }

@@ -1,9 +1,0 @@
-<mapper namespace="com.seres.kgserver.dao.PlayerDao">
-    <select id="selectPlayer" resultType="com.seres.kgserver.pojo.demo_basketballplayer.Player">
-        match (v:player) return v.player.vid as id, v.player.name as name, v.player.age as age
-    </select>
-
-    <select id="selectAllTags" resultType="java.lang.Object">
-        FETCH PROP ON * * YIELD vertex AS v;
-    </select>
-</mapper>
