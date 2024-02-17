@@ -23,6 +23,10 @@ public interface DisciplineDao extends NebulaDaoBasic<Discipline, String> {
     void insertAffiliatedPhase(@Param("disciplineVid") String disciplineVid, @Param("phaseVid") String phaseVid);
 
     //插入边（学科->阶段）
-    void insertAffiliatedDiscipline(@Param("disciplineVid") String disciplineVid, @Param("projectVid") String projectVid);
+    void insertAffiliatedProject(@Param("disciplineVid") String disciplineVid, @Param("projectVid") String projectVid);
+
+    List<Discipline> selectDisciplineByProjectId(@Param("projectId") String projectId);
      List<Discipline> selectAllDiscipline();
+
+     void updateInfoById(@Param("discipline") Discipline discipline);
 }

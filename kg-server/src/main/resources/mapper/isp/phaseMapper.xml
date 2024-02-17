@@ -1,2 +1,31 @@
 <mapper namespace="com.seres.kgserver.dao.isp.PhaseDao">
+    <insert id="insertAffiliatedProject">
+        insert edge affiliated_project() values "${phaseVid}"->"${projectVid}":()
+    </insert>
+
+
+    <select id="selectAllPhases" resultType="com.seres.kgserver.nebula.tag.isp.Phase">
+        <!-- isp数据量小可以查询全部 -->
+        MATCH (a: phase) RETURN a
+    </select>
+
+    <select id="selectPhasesByProjectId" resultType="com.seres.kgserver.nebula.tag.isp.Phase">
+        MATCH (a:phase)-[:affiliated_project]->(c) WHERE c.project.id=='${projectId}' RETURN a
+    </select>
+
+    <update id="updateInfoById" parameterType="com.seres.kgserver.nebula.tag.isp.Phase">
+
+        update VERTEX "${phase.id}" set
+
+        phase.phaseName = '${phase.phaseName}',
+        phase.beginTime = '${phase.beginTime}',
+        phase.endTime = '${phase.endTime}',
+        phase.status = '${phase.status}',
+        phase.type = '${phase.type}',
+        phase.timeType = '${phase.timeType}',
+        phase.description = '${phase.description}',
+        phase.bClear = '${phase.bClear}',
+        phase.updateTime = '${phase.updateTime}'
+
+    </update>
 </mapper>

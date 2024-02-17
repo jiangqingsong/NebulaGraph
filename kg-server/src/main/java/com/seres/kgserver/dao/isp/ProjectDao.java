@@ -2,6 +2,7 @@ package com.seres.kgserver.dao.isp;
 
 import com.seres.kgserver.nebula.tag.isp.Project;
 import org.nebula.contrib.ngbatis.proxy.NebulaDaoBasic;
+import org.springframework.data.repository.query.Param;
 
 import javax.annotation.Resource;
 
@@ -15,5 +16,5 @@ import javax.annotation.Resource;
  */
 @Resource
 public interface ProjectDao extends NebulaDaoBasic<Project, String> {
-
+    void updateInfoById(@Param("project") Project project);
 }

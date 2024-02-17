@@ -1,2 +1,5 @@
 <mapper namespace="com.seres.kgserver.dao.isp.FileDao">
+    <insert id="insertAffiliatedDiscipline">
+        insert edge affiliated_discipline() values "${fileVid}"->"${disciplineVid}":()
+    </insert>
 </mapper>

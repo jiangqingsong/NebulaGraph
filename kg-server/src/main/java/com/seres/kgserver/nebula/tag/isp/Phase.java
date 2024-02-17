@@ -22,6 +22,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 public class Phase {
     @Id
+    private String vid;
     private String id;
     private String phaseName;
     private String beginTime;//阶段开始时间

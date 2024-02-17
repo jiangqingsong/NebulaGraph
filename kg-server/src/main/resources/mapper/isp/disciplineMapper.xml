@@ -1,7 +1,7 @@
 <mapper namespace="com.seres.kgserver.dao.isp.DisciplineDao">
 
-    <insert id="insertAffiliatedDiscipline">
-        insert edge affiliated_discipline() values "${disciplineVid}"->"${projectVid}":()
+    <insert id="insertAffiliatedProject">
+        insert edge affiliated_project() values "${disciplineVid}"->"${projectVid}":()
     </insert>
 
     <insert id="insertAffiliatedPhase">
@@ -12,4 +12,18 @@
         <!-- isp数据量小可以查询全部 -->
         MATCH (a: discipline) RETURN a
     </select>
+
+    <select id="selectDisciplineByProjectId" resultType="com.seres.kgserver.nebula.tag.isp.Discipline">
+        MATCH (a:discipline)-[:affiliated_project]->(c) WHERE c.project.id=='${projectId}' RETURN a
+    </select>
+
+    <update id="updateInfoById" parameterType="com.seres.kgserver.nebula.tag.isp.Discipline">
+
+        update VERTEX "${discipline.id}" set
+
+            discipline.disciplineName = '${discipline.disciplineName}',
+            discipline.description = '${discipline.description}',
+            discipline.updateTime = '${discipline.updateTime}'
+
+    </update>
 </mapper>

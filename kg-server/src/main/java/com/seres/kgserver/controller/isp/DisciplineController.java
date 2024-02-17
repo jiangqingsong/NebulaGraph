@@ -1,5 +1,6 @@
 package com.seres.kgserver.controller.isp;
 
+import com.seres.base.ErrResp;
 import com.seres.base.Resp;
 import com.seres.kgserver.nebula.tag.isp.Discipline;
 import com.seres.kgserver.service.isp.DisciplineService;
@@ -30,7 +31,17 @@ public class DisciplineController {
         if (success) {
             return new Resp<>("新增学科成功！");
         } else {
-            return new Resp<>("新增学科失败！");
+            return new ErrResp("新增学科失败！");
+        }
+    }
+
+    @PostMapping("/update")
+    public Resp<String> update(@RequestBody Discipline vo) {
+        boolean success = disciplineService.updateById(vo);
+        if (success) {
+            return new Resp<>("修改学科成功！");
+        } else {
+            return new ErrResp("修改学科失败！");
         }
     }
 
@@ -40,12 +51,17 @@ public class DisciplineController {
         if (success) {
             return new Resp<>("删除学科成功！");
         } else {
-            return new Resp<>("删除学科失败！");
+            return new ErrResp("删除学科失败！");
         }
     }
 
     @GetMapping("/getDisciplines")
     public Resp<List<Discipline>> getDisciplines() {
         return new Resp<>(disciplineService.getDisciplines());
+    }
+
+    @GetMapping("/getDisciplinesByProjectId")
+    public Resp<List<Discipline>> getDisciplinesByProjectId(@RequestParam String projectId) {
+        return new Resp<>(disciplineService.getDisciplinesByProjectId(projectId));
     }
 }

@@ -16,13 +16,14 @@ import javax.persistence.Table;
  * @date 2024/2/15 11:10
  */
 @Data
-@Table(name = "project")
+@Table(name = "file")
 @Space(name = "isp")
 @NoArgsConstructor
 @AllArgsConstructor
 public class File {
     @Id
+    private String vid;
     private String id;
     private String fileName;
-    private String uploadTime;//yyyy-MM-dd hh:mm:ss
+    private String updateTime;//yyyy-MM-dd hh:mm:ss
 }

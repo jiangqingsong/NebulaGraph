@@ -1,6 +1,5 @@
 package com.seres.kgserver.service.isp;
 
-import com.seres.base.tool.minio.MinioProperties;
 import com.seres.base.tool.minio.MinioService;
 import com.seres.base.util.DateTimeUtil;
 import com.seres.base.util.IDUtil;
@@ -10,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
@@ -30,48 +30,40 @@ public class FileService {
     private MinioService minioService;
 
     @Autowired
-    private MinioProperties minioProperties;
-
-    @Autowired
     private FileDao fileDao;
 
-    public void uploadFile(String localFilePath, String fileName, String disciplineId) {
-        //todo 上传文件到minIO
-        //todo 插入节点（文件）
-        String updateTime = DateTimeUtil.currentDateTime("yyyy-MM-dd hh:mm:ss");
-        String id = IDUtil.generatorUUID();
-        File file = new File();
-        file.setId(id);
-        file.setFileName(fileName);
-
-//        file.setFilePath();
-        fileDao.insert(file);
-        //todo 插入边(（文件）-[隶属]->（学科）)
-//        fileDao.insertEdge();
-
-//        String fileName = "多模态知识图谱构建与应用1.pdf";
-        try (FileInputStream in = new FileInputStream(localFilePath)) {
-            minioService.upload(fileName, in);
-        } catch (Exception e) {
-            log.error("upload file to minIO system fail! " + e.getMessage());
-        }
-    }
-
     /**
-     * @param
-     * @return
-     * @Description: 单个文件上传
-     * @version v1.0
-     * @author jiangqs
-     * @date 2024/2/16 10:20
+     * @Description 单个文件上传
+     * @Param
+     * @Return
      */
-    public void upload(MultipartFile file) {
-        String filename = file.getOriginalFilename();
+    public boolean upload(MultipartFile file, String disciplineId) {
 
+        String filename = file.getOriginalFilename();
+        //1 上传文件
         try (InputStream in = file.getInputStream()) {
             minioService.upload(filename, in);
         } catch (Exception e) {
             log.error("upload file to minIO system fail! " + e.getMessage());
+            return false;
+        }
+
+        //2 插入文件节点
+        String updateTime = DateTimeUtil.currentDateTime();
+        String id = IDUtil.generatorUUID();
+        File file1 = new File();
+        file1.setVid(id);
+        file1.setId(id);
+        file1.setFileName(filename);
+        file1.setUpdateTime(updateTime);
+        try {
+            fileDao.insert(file1);
+            //3 插入边(（文件）-[隶属]->（学科）)
+            fileDao.insertAffiliatedDiscipline(id, disciplineId);
+            return true;
+        } catch (Exception e) {
+            log.error("插入文件节点或边关系出错：{}", e.getMessage());
+            return false;
         }
     }
 
@@ -91,6 +83,41 @@ public class FileService {
      */
     public void batchDownload(List<String> fileNames, String zip, HttpServletResponse res, HttpServletRequest req) {
         minioService.batchDownload(fileNames, zip, res, req);
+    }
+
+    /**
+     * @Description 单个文件删除
+     * @Param
+     * @Return
+     */
+
+    public boolean delete(String fileName) {
+        try {
+            minioService.remove(fileName);
+            return true;
+        } catch (Exception e) {
+            log.error("删除文件{}失败! {}", fileName, e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * @Description 单个文件删除
+     * @Param
+     * @Return
+     */
+
+    public boolean batchDelete(List<String> fileNames) {
+        try {
+            fileNames.forEach(fileName -> {
+
+                minioService.remove(fileName);
+            });
+            return true;
+        } catch (Exception e) {
+            log.error("批量删除文件{}失败! {}", fileNames.toString(), e.getMessage());
+            return false;
+        }
     }
 
 

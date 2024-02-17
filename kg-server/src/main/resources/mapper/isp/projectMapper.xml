@@ -1,2 +1,11 @@
 <mapper namespace="com.seres.kgserver.dao.isp.ProjectDao">
+    <update id="updateInfoById" parameterType="com.seres.kgserver.nebula.tag.isp.Project">
+
+        update VERTEX "${project.id}" set
+        project.projectName = '${project.projectName}',
+        project.type = '${project.type}',
+        project.description = '${project.description}',
+        project.updateTime = '${project.updateTime}'
+
+    </update>
 </mapper>
