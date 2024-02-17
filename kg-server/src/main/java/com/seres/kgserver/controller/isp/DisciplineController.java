@@ -19,7 +19,7 @@ import java.util.List;
  * @date 2024/2/16 16:19
  */
 @RestController
-@RequestMapping("/discipline")
+@RequestMapping("/isp/discipline")
 public class DisciplineController {
 
     @Autowired

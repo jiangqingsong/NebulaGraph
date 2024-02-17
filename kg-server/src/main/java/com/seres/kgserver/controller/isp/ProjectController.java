@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2024/2/16 16:19
  */
 @RestController
-@RequestMapping("/project")
+@RequestMapping("/isp/project")
 public class ProjectController {
 
     @Autowired

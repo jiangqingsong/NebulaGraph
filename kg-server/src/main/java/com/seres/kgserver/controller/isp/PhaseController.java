@@ -3,7 +3,6 @@ package com.seres.kgserver.controller.isp;
 import com.seres.base.ErrResp;
 import com.seres.base.Resp;
 import com.seres.kgserver.nebula.tag.isp.Phase;
-import com.seres.kgserver.nebula.tag.isp.Project;
 import com.seres.kgserver.service.isp.PhaseService;
 import com.seres.kgserver.vo.isp.AddPhaseVO;
 import com.seres.kgserver.vo.isp.DeletePhaseVO;
@@ -20,7 +19,7 @@ import java.util.List;
  * @date 2024/2/17 13:59
  */
 @RestController
-@RequestMapping("/phase")
+@RequestMapping("/isp/phase")
 public class PhaseController {
 
     @Autowired

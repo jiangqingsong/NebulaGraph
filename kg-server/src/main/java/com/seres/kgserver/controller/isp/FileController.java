@@ -2,6 +2,7 @@ package com.seres.kgserver.controller.isp;
 
 import com.seres.base.ErrResp;
 import com.seres.base.Resp;
+import com.seres.kgserver.nebula.tag.isp.File;
 import com.seres.kgserver.service.isp.FileService;
 import com.seres.kgserver.vo.isp.BatchDeleteVO;
 import com.seres.kgserver.vo.isp.BatchDownloadVO;
@@ -22,8 +23,8 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("/minio")
-public class MinIOController {
+@RequestMapping("/isp/file")
+public class FileController {
 
     @Autowired
     private FileService fileService;
@@ -66,5 +67,10 @@ public class MinIOController {
         } else {
             return new ErrResp("文件批量删除失败！");
         }
+    }
+
+    @GetMapping("/getFilesByDisciplineId")
+    public Resp<List<File>> getFilesByDisciplineId(@RequestParam String disciplineId) {
+        return new Resp<>(fileService.getFilesByDisciplineId(disciplineId));
     }
 }

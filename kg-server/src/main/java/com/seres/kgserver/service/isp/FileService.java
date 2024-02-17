@@ -32,6 +32,17 @@ public class FileService {
     @Autowired
     private FileDao fileDao;
 
+
+
+    /**
+    * @Description 通过学科ID获取文件列表
+    * @Param
+    * @Return
+    */
+
+    public List<File> getFilesByDisciplineId(String disciplineId){
+        return fileDao.selectFilesByDisciplineId(disciplineId);
+    }
     /**
      * @Description 单个文件上传
      * @Param

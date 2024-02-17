@@ -2,4 +2,8 @@
     <insert id="insertAffiliatedDiscipline">
         insert edge affiliated_discipline() values "${fileVid}"->"${disciplineVid}":()
     </insert>
+
+    <select id="selectFilesByDisciplineId" resultType="com.seres.kgserver.nebula.tag.isp.File">
+        MATCH (a:file)-[:affiliated_discipline]->(c) WHERE c.discipline.id=='${disciplineId}' RETURN a
+    </select>
 </mapper>

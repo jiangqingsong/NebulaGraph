@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Description: 文件DAO
@@ -20,4 +21,6 @@ import javax.annotation.Resource;
 public interface FileDao extends NebulaDaoBasic<File, String> {
     //插入边（文件->学科）
     void insertAffiliatedDiscipline(@Param("fileVid") String fileVid, @Param("disciplineVid") String disciplineVid);
+
+    List<File> selectFilesByDisciplineId(@Param("disciplineId") String disciplineId);
 }
