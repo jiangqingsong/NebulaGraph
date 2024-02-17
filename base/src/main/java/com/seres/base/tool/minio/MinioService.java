@@ -10,12 +10,20 @@ import io.minio.messages.Tags;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.misc.BASE64Encoder;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * Redis操作
@@ -314,5 +322,67 @@ public class MinioService {
             log.error("获取minio文件流并下载失败：{}", filePath, e);
             throw new AppException(BaseErrCode.FILE_DOWNLOAD_ERR);
         }
+    }
+
+    /**
+     * @description: 批量下载
+     * @date: 2022/8/17 16:50
+     * @param: filenames: 多个文件名称
+     * @Param: zip: 压缩包名称
+     * @Param: res: 响应对象
+     * @return: void
+     **/
+    public void batchDownload(List<String> filenames, String zip, HttpServletResponse res, HttpServletRequest req) {
+        try {
+            BucketExistsArgs bucketArgs = BucketExistsArgs.builder().bucket(bucketName).build();
+            boolean bucketExists = client.bucketExists(bucketArgs);
+            res.reset();
+            BufferedOutputStream bos = new BufferedOutputStream(res.getOutputStream());
+            ZipOutputStream out = new ZipOutputStream(bos);
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            for (int i = 0; i < filenames.size(); i++) {
+                GetObjectArgs objectArgs = GetObjectArgs.builder().bucket(bucketName)
+                        .object(filenames.get(i)).build();
+                InputStream object = client.getObject(objectArgs);
+                byte buf[] = new byte[1024];
+                int length = 0;
+                res.setCharacterEncoding("utf-8");
+                res.setContentType("application/force-download");// 设置强制下载不打开
+                res.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
+                res.setHeader("Content-Disposition", "attachment;filename=" + filenameEncoding(zip, req) + ".zip");
+                out.putNextEntry(new ZipEntry(filenames.get(i)));
+                while ((length = object.read(buf)) > 0) {
+                    out.write(buf, 0, length);
+                }
+            }
+            out.close();
+            bos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     *  设置不同浏览器编码
+     * @param filename 文件名称
+     * @param request 请求对象
+     */
+    public static String filenameEncoding(String filename, HttpServletRequest request) throws UnsupportedEncodingException {
+        // 获得请求头中的User-Agent
+        String agent = request.getHeader("User-Agent");
+        // 根据不同的客户端进行不同的编码
+
+        if (agent.contains("MSIE")) {
+            // IE浏览器
+            filename = URLEncoder.encode(filename, "utf-8");
+        } else if (agent.contains("Firefox")) {
+            // 火狐浏览器
+            BASE64Encoder base64Encoder = new BASE64Encoder();
+            filename = "=?utf-8?B?" + base64Encoder.encode(filename.getBytes("utf-8")) + "?=";
+        } else {
+            // 其它浏览器
+            filename = URLEncoder.encode(filename, "utf-8");
+        }
+        return filename;
     }
 }
