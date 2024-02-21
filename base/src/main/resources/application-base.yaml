@@ -45,11 +45,20 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 
+#minio: #开源体验地址
+#  url: https://play.min.io # minio服务地址，缺省值 http://localhost:9000
+#  bucketName: s-jqs # 桶名，缺省值 public
+#  accessKey: Q3AM3UQ867SPQQA43P2F # 公钥，缺省值 minioadmin
+#  secretKey: zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG # 私钥，缺省值 minioadmin
+#
 minio:
-  url: https://play.min.io # minio服务地址，缺省值 http://localhost:9000
+  url: http://10.36.191.30:19000 # minio服务地址，缺省值 http://localhost:9000
   bucketName: s-jqs # 桶名，缺省值 public
-  accessKey: Q3AM3UQ867SPQQA43P2F # 公钥，缺省值 minioadmin
-  secretKey: zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG # 私钥，缺省值 minioadmin
+  accessKey: t4EPaUA5bnh2MFCgEKvM # 公钥，缺省值 minioadmin
+  secretKey: 0NJzfH6O5P4JIEvkH2IP2oyCmbBsQruHBr4nZeZ4 # 私钥，缺省值 minioadmin
+#  accessKey: root # 公钥，缺省值 minioadmin
+#  secretKey: dvx_A8k4 # 私钥，缺省值 minioadmin
+
 
 #项目信息
 info:
